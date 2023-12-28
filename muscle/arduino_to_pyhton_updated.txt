@@ -1,0 +1,77 @@
+int cb1 = 0;
+int cb2 = 0;
+int dc1 = 0;
+int dc2 = 0;
+int py_to_ard1 = 0;
+int py_to_ard2 = 0;
+int py_to_ard3 = 0;
+int py_to_ard4 = 0;
+void truyen_data();
+void nhan_data();
+
+void setup(){
+  Serial.begin(115200);
+  pinMode(LED_BUILTIN, OUTPUT);// de kiem tra, ko can cho vao code
+}
+
+void loop(){
+  //dung chuc nang nao thi '//' chuc nang con lai
+  //truyen_data();
+  nhan_data();
+}
+
+void truyen_data() {
+  cb1 = random(0, 10);
+  cb2 = random(0, 10);
+  dc1 = random(0, 10);
+  dc2 = random(0, 10);
+  Serial.print(cb1);
+  Serial.print(",");
+  Serial.print(cb2);
+  Serial.print(",");
+  Serial.print(dc1);
+  Serial.print(",");
+  Serial.print(dc2);
+  Serial.print("\n");
+  
+  long int start_time = millis();
+  while (millis() - start_time < 1000);
+}
+
+void nhan_data(){
+  if (Serial.available() > 0){
+    String data = Serial.readStringUntil('\n');
+
+    int commaIndex1 = data.indexOf(',');
+    int commaIndex2 = data.indexOf(',', commaIndex1 + 1);
+    int commaIndex3 = data.indexOf(',', commaIndex2 + 1);
+
+    if  (commaIndex1 != -1 && commaIndex2 != -1 && commaIndex3 != -1){
+      String value1_str = data.substring(0, commaIndex1);
+      String value2_str = data.substring(commaIndex1 + 1, commaIndex2);
+      String value3_str = data.substring(commaIndex2 + 1, commaIndex3);
+      String value4_str = data.substring(commaIndex3 + 1);
+
+      py_to_ard1 = value1_str.toInt();
+      py_to_ard2 = value2_str.toInt();
+      py_to_ard3 = value3_str.toInt();
+      py_to_ard4 = value4_str.toInt();
+	
+	//day chi la doan kiem tra cac gia tri, ko can cho vao code
+      if (py_to_ard2 <= 5){
+        digitalWrite(LED_BUILTIN, HIGH);
+      }
+      if (py_to_ard2 > 5) {
+        digitalWrite(LED_BUILTIN, LOW);
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+int cb1 = 0;
+int cb2 = 0;
+int dc1 = 0;
+int dc2 = 0;
+void truyen_data();
+
+void setup(){
+  Serial.begin(115200);
+}
+
+void loop(){
+  truyen_data();
+}
+
+void truyen_data() {
+  cb1 = random(0, 10);
+  cb2 = random(0, 10);
+  dc1 = random(0, 10);
+  dc2 = random(0, 10);
+  Serial.print(cb1);
+  Serial.print(",");
+  Serial.print(cb2);
+  Serial.print(",");
+  Serial.print(dc1);
+  Serial.print(",");
+  Serial.print(dc2);
+  Serial.print("\n");
+  
+  long int start_time = millis();
+  while (millis() - start_time < 10);
+}
